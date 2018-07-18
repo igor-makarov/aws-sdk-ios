@@ -47,6 +47,24 @@ typedef NS_ENUM(NSInteger, AWSServiceErrorType) {
 
 @class AWSEndpoint;
 
+#if TARGET_OS_IOS
+#define AWSDevice UIDevice
+#import <UIKit/UIKit.h>
+#elif TARGET_OS_WATCH
+#define AWSDevice WKInterfaceDevice
+#import <WatchKit/WatchKit.h>
+#elif TARGET_OS_MAC
+#define AWSDevice AWSMacDevice
+@interface AWSMacDevice : NSObject
+
+@property (class, readonly, strong) AWSMacDevice * currentDevice;
+@property (readonly, copy) NSString * systemName;
+@property (readonly, copy) NSString * systemVersion;
+@property (readonly, copy) NSString * model;
+
+@end
+#endif
+
 #pragma mark - AWSService
 
 /**

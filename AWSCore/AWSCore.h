@@ -13,7 +13,9 @@
 // permissions and limitations under the License.
 //
 
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#endif
 
 //! Project version number for AWSCore.
 FOUNDATION_EXPORT double AWSCoreVersionNumber;
@@ -45,8 +47,10 @@ FOUNDATION_EXPORT const unsigned char AWSCoreVersionString[];
 #import "AWSBolts.h"
 #import "AWSGZIP.h"
 #import "AWSFMDB.h"
+#if TARGET_OS_IOS
 #import "AWSKSReachability.h"
 #import "AWSTMCache.h"
+#endif
 #import "AWSUICKeyChainStore.h"
 
 

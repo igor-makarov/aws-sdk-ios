@@ -15,7 +15,12 @@
 
 #import "AWSService.h"
 
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#endif
+#if TARGET_OS_MAC
+#import <SystemConfiguration/SystemConfiguration.h>
+#endif
 #import "AWSSynchronizedMutableDictionary.h"
 #import "AWSURLResponseSerialization.h"
 #import "AWSCocoaLumberjack.h"
@@ -25,6 +30,26 @@ NSString *const AWSiOSSDKVersion = @"2.6.24";
 NSString *const AWSServiceErrorDomain = @"com.amazonaws.AWSServiceErrorDomain";
 
 static NSString *const AWSServiceConfigurationUnknown = @"Unknown";
+
+#if TARGET_OS_MAC
+@implementation AWSMacDevice
++ (AWSMacDevice *) currentDevice {
+    return [[AWSMacDevice alloc] init];
+}
+
+- (NSString *) systemName {
+    return CFBridgingRelease(SCDynamicStoreCopyComputerName(NULL, NULL));
+}
+
+- (NSString *) systemVersion {
+    return [[NSProcessInfo processInfo] operatingSystemVersionString];
+}
+
+- (NSString *) model {
+    return @"Undefined";
+}
+@end
+#endif
 
 #pragma mark - AWSService
 
@@ -142,11 +167,11 @@ static NSString *const AWSServiceConfigurationUnknown = @"Unknown";
     static NSString *_userAgent = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString *systemName = [[[UIDevice currentDevice] systemName] stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+        NSString *systemName = [[[AWSDevice currentDevice] systemName] stringByReplacingOccurrencesOfString:@" " withString:@"-"];
         if (!systemName) {
             systemName = AWSServiceConfigurationUnknown;
         }
-        NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
+        NSString *systemVersion = [[AWSDevice currentDevice] systemVersion];
         if (!systemVersion) {
             systemVersion = AWSServiceConfigurationUnknown;
         }
