@@ -53,7 +53,7 @@ typedef NS_ENUM(NSInteger, AWSServiceErrorType) {
 #elif TARGET_OS_WATCH
 #define AWSDevice WKInterfaceDevice
 #import <WatchKit/WatchKit.h>
-#elif TARGET_OS_MAC
+#elif TARGET_OS_OSX
 #define AWSDevice AWSMacDevice
 @interface AWSMacDevice : NSObject
 
