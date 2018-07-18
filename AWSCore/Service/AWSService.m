@@ -18,7 +18,7 @@
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
 #endif
-#if TARGET_OS_MAC
+#if TARGET_OS_OSX
 #import <SystemConfiguration/SystemConfiguration.h>
 #endif
 #import "AWSSynchronizedMutableDictionary.h"
@@ -31,7 +31,7 @@ NSString *const AWSServiceErrorDomain = @"com.amazonaws.AWSServiceErrorDomain";
 
 static NSString *const AWSServiceConfigurationUnknown = @"Unknown";
 
-#if TARGET_OS_MAC
+#if TARGET_OS_OSX
 @implementation AWSMacDevice
 + (AWSMacDevice *) currentDevice {
     return [[AWSMacDevice alloc] init];
